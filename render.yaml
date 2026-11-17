@@ -1,6 +1,6 @@
 databases:
   - name: productos-db
-    databaseName: Productos
+    databaseName: productos
     user: productos_user
     plan: free
 

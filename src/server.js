@@ -11,6 +11,14 @@ async function start() {
   try {
     await db.verifyConnection();
     console.log('Conexión a la base de datos verificada.');
+
+    // Asegurar que el esquema/tabla existan (útil en despliegues nuevos como Render).
+    // sync() sin alter NO modifica ni borra datos existentes.
+    const schema = process.env.DB_SCHEMA || 'tienda';
+    await db.getSequelize().query(`CREATE SCHEMA IF NOT EXISTS "${schema}"`);
+    const { Producto } = db.initModels();
+    await Producto.sync();
+    console.log('Modelo sincronizado con la base de datos.');
   } catch (err) {
     console.error('No se pudo verificar la conexión a la base de datos:', err.message);
     process.exit(1);
