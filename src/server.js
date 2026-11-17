@@ -19,6 +19,10 @@ async function start() {
     const { Producto } = db.initModels();
     await Producto.sync();
     console.log('Modelo sincronizado con la base de datos.');
+
+    // Cargar datos de prueba si la tabla está vacía (automático en cada deploy)
+    const seedIfEmpty = require('../db/seed');
+    await seedIfEmpty();
   } catch (err) {
     console.error('No se pudo verificar la conexión a la base de datos:', err.message);
     process.exit(1);
