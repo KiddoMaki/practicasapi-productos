@@ -9,8 +9,15 @@ const securityHeaders = helmet();
 
 const corsMiddleware = cors({
   origin: (origin, callback) => {
-    // Permitir herramientas sin origen (Postman/curl) y orígenes configurados
-    if (!origin || origins.includes(origin)) {
+    // Permitir herramientas sin origen (Postman/curl)
+    if (!origin) {
+      return callback(null, true);
+    }
+    // Comodín: reflejar cualquier origen (útil para GitHub Pages / demos)
+    if (origins.includes('*')) {
+      return callback(null, origin);
+    }
+    if (origins.includes(origin)) {
       return callback(null, true);
     }
     return callback(null, false);
