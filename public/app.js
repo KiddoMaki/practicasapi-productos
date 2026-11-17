@@ -1,4 +1,9 @@
-const API_BASE = '/api/productos';
+// En GitHub Pages no hay servidor Express: apuntamos a la API desplegada en Render.
+// Si se sirve desde el propio Express (mismo origen), se usa la ruta relativa.
+const RENDER_API_URL = 'https://practicasapi-productos.onrender.com';
+const API_BASE =
+  (window.API_BASE_URL || (location.hostname.endsWith('github.io') ? RENDER_API_URL : '')).replace(/\/$/, '') +
+  '/api/productos';
 
 const state = {
   page: 1,
