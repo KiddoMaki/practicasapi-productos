@@ -1,0 +1,176 @@
+{
+  "info": {
+    "name": "Productos API",
+    "description": "Colección para probar la API REST de productos (tabla real: tienda.productos). Variables: {{baseUrl}}, {{productoId}}.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos - Listado",
+      "item": [
+        {
+          "name": "GET /api/productos (página 1)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/productos?page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["api","productos"], "query": [{"key":"page","value":"1"},{"key":"limit","value":"10"}] }
+          }
+        },
+        {
+          "name": "GET /api/productos (página 2)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/productos?page=2&limit=10", "host": ["{{baseUrl}}"], "path": ["api","productos"], "query": [{"key":"page","value":"2"},{"key":"limit","value":"10"}] }
+          }
+        },
+        {
+          "name": "GET /api/productos (límite inválido)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/productos?page=1&limit=abc", "host": ["{{baseUrl}}"], "path": ["api","productos"], "query": [{"key":"page","value":"1"},{"key":"limit","value":"abc"}] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos - Consulta por ID",
+      "item": [
+        {
+          "name": "GET /api/productos/:id (existente)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/productos/{{productoId}}", "host": ["{{baseUrl}}"], "path": ["api","productos","{{productoId}}"] }
+          }
+        },
+        {
+          "name": "GET /api/productos/:id (inexistente)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/productos/99999999", "host": ["{{baseUrl}}"], "path": ["api","productos","99999999"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos - Crear (POST)",
+      "item": [
+        {
+          "name": "POST /api/productos (válido)",
+          "request": {
+            "method": "POST",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Agua mineral Postman Prueba 600 ml\",\n  \"categoria\": \"Bebidas\",\n  \"precio_venta_publico\": 12.50\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/productos", "host": ["{{baseUrl}}"], "path": ["api","productos"] }
+          }
+        },
+        {
+          "name": "POST /api/productos (inválido - falta campo)",
+          "request": {
+            "method": "POST",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Producto incompleto\",\n  \"categoria\": \"Despensa\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/productos", "host": ["{{baseUrl}}"], "path": ["api","productos"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos - Reemplazo (PUT)",
+      "item": [
+        {
+          "name": "PUT /api/productos/:id (válido)",
+          "request": {
+            "method": "PUT",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Producto actualizado PUT Prueba 1 kg\",\n  \"categoria\": \"Despensa\",\n  \"precio_venta_publico\": 25.00\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/productos/{{productoId}}", "host": ["{{baseUrl}}"], "path": ["api","productos","{{productoId}}"] },
+            "description": "Reemplazo completo. Ajusta {{productoId}} a un ID de prueba para no modificar registros reales."
+          }
+        },
+        {
+          "name": "PUT /api/productos/:id (inválido - campo faltante)",
+          "request": {
+            "method": "PUT",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Solo nombre\",\n  \"precio_venta_publico\": 10.00\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/productos/{{productoId}}", "host": ["{{baseUrl}}"], "path": ["api","productos","{{productoId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos - Actualización parcial (PATCH)",
+      "item": [
+        {
+          "name": "PATCH /api/productos/:id (válido)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio_venta_publico\": 19.99\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/productos/{{productoId}}", "host": ["{{baseUrl}}"], "path": ["api","productos","{{productoId}}"] },
+            "description": "Actualización parcial. Usa un ID de prueba para no alterar datos reales."
+          }
+        },
+        {
+          "name": "PATCH /api/productos/:id (inválido - cuerpo vacío)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key":"Content-Type","value":"application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/productos/{{productoId}}", "host": ["{{baseUrl}}"], "path": ["api","productos","{{productoId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos - Eliminar (DELETE)",
+      "item": [
+        {
+          "name": "DELETE /api/productos/:id (existente / ID de prueba)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/api/productos/{{productoId}}", "host": ["{{baseUrl}}"], "path": ["api","productos","{{productoId}}"] },
+            "description": "Elimina el producto indicado. Usa un ID creado para pruebas (p. ej. el devuelto por POST válido) para evitar borrar registros reales."
+          }
+        },
+        {
+          "name": "DELETE /api/productos/:id (inexistente)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/api/productos/99999999", "host": ["{{baseUrl}}"], "path": ["api","productos","99999999"] }
+          }
+        }
+      ]
+    }
+  ]
+}
