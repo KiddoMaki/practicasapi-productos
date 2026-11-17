@@ -115,7 +115,7 @@ Basados en `tienda.productos` (no se asumieron columnas distintas):
    npm start      # producción/ejecución normal
    npm run dev    # desarrollo con watch (Node --watch)
    ```
-5. Verificar: `GET http://localhost:3000/health` debe responder 200 con conectividad a BD.
+5. Verificar: `GET http://localhost:3000/health` debe responder 200 con conectividad a BD. (En producción: `https://practicasapi-productos.onrender.com/health`.)
 
 ## Despliegue en Render
 

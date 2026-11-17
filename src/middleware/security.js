@@ -2,7 +2,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const corsOrigin = process.env.CORS_ORIGIN || 'https://kiddomaki.github.io';
 const origins = corsOrigin.split(',').map((o) => o.trim()).filter(Boolean);
 
 const securityHeaders = helmet();
